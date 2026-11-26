@@ -176,7 +176,7 @@ if (tab === "admissions") {
   box.querySelectorAll("[data-delete-admission]").forEach(b =>
     b.onclick = () => deleteAdmission(b.dataset.deleteAdmission));
 
-} else if (tab === "resultsAdmin") {
+} else if (tab === "resourcesAdmin") {
 
       box.innerHTML = `<h3>PDF আপলোড</h3>
       <form id="pdfForm" class="admin-box form">
