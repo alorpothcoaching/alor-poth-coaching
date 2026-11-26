@@ -203,7 +203,75 @@ if (tab === "admissions") {
       };
       await loadPdfAdmin();
 
-    } else if (tab === "noticesAdmin") {
+    } else if (tab === "resultsAdmin") {
+
+  box.innerHTML = `
+    <h3>ছাত্রছাত্রীদের রেজাল্ট প্রকাশ</h3>
+
+    <form id="resultAdminForm" class="admin-box form">
+
+      <label>রোল নম্বর
+        <input name="roll_no" required>
+      </label>
+
+      <label>ছাত্রের নাম
+        <input name="student_name" required>
+      </label>
+
+      <label>জন্মতারিখ
+        <input name="dob" type="date" required>
+      </label>
+
+      <label>শ্রেণি
+        <input name="class_name" required>
+      </label>
+
+      <label>পরীক্ষার নাম
+        <input name="exam_name" required>
+      </label>
+
+      <label>প্রাপ্ত নম্বর
+        <input name="marks" type="number" required>
+      </label>
+
+      <label>পূর্ণমান
+        <input name="total_marks" type="number" required>
+      </label>
+
+      <label>গ্রেড
+        <input name="grade">
+      </label>
+
+      <button class="btn primary">রেজাল্ট প্রকাশ করুন</button>
+    </form>
+
+    <div id="resultAdminMsg"></div>
+  `;
+
+  $("resultAdminForm").onsubmit = async e => {
+    e.preventDefault();
+
+    const f = e.currentTarget;
+
+    const { error } = await db.from("results").insert({
+      roll_no: val(f,"roll_no"),
+      student_name: val(f,"student_name"),
+      dob: val(f,"dob"),
+      class_name: val(f,"class_name"),
+      exam_name: val(f,"exam_name"),
+      marks: Number(val(f,"marks")),
+      total_marks: Number(val(f,"total_marks")),
+      grade: val(f,"grade")
+    });
+
+    $("resultAdminMsg").textContent = error
+      ? "রেজাল্ট প্রকাশ হয়নি: " + error.message
+      : "রেজাল্ট সফলভাবে প্রকাশিত হয়েছে।";
+
+    if (!error) f.reset();
+  };
+
+} else if (tab === "noticesAdmin") {
       box.innerHTML = `<h3>নতুন নোটিশ প্রকাশ</h3>
       <form id="noticeForm" class="admin-box form">
       <label>নোটিশের শিরোনাম<input name="title" required></label>
