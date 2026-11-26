@@ -70,6 +70,41 @@ $("admissionForm").addEventListener("submit", async e => {
 });
 
 
+  
+$("admissionStatusForm").addEventListener("submit", async e => {
+  e.preventDefault();
+
+  const f = e.currentTarget;
+  const out = $("admissionStatusOutput");
+
+  out.textContent = "আবেদনের অবস্থা খোঁজা হচ্ছে…";
+
+  const { data, error } = await db.rpc("check_admission_status", {
+    p_application_id: val(f, "application_id").trim(),
+    p_phone: val(f, "phone").trim()
+  });
+
+  if (error) {
+    out.textContent = "যাচাই করা যায়নি। আবার চেষ্টা করুন।";
+    return;
+  }
+
+  if (!data) {
+    out.textContent = "Application ID অথবা মোবাইল নম্বর সঠিক নয়।";
+    return;
+  }
+
+  const status = String(data).toLowerCase();
+
+  const messages = {
+    pending: "আপনার আবেদন বর্তমানে অপেক্ষমাণ (Pending)।",
+    approved: "অভিনন্দন! আপনার ভর্তি আবেদন অনুমোদিত হয়েছে (Approved)।",
+    rejected: "দুঃখিত, আপনার আবেদনটি অনুমোদিত হয়নি (Rejected)।"
+  };
+
+  out.textContent = messages[status] || "আবেদনের বর্তমান অবস্থা: " + data;
+});
+
   $("resultForm").addEventListener("submit", async e => {
     e.preventDefault();
     const f = e.currentTarget, out = $("resultOutput");
