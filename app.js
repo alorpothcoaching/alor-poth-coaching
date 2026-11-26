@@ -145,51 +145,39 @@
     const box = $("adminContent");
     box.innerHTML = '<p class="muted">লোড হচ্ছে…</p>';
 
-    if (tab === "admissions") {
-      const { data, error } = await db.from("admissions").select("*")
-        .order("created_at",{ascending:false});
-      if (error) { box.textContent = "তালিকা লোড করা যায়নি।"; return; }
-      box.innerHTML = "<h3>ভর্তি আবেদন</h3>" + (data.length ? data.map(a =>
-        `<div class="admin-box"><b>${esc(a.student_name)}</b> — ${esc(a.class_name)}
-        <p>অভিভাবক: ${esc(a.guardian_name)} | ফোন: ${esc(a.phone)}</p>
-        <p>জন্মতারিখ: ${esc(a.dob)} | ${esc(a.address)}</p>
-        <p>অবস্থা: ${esc(a.status)}</p>
-        <button class="admin-action" data-approve="${a.id}">অনুমোদন</button>
-        <button class="admin-action" data-reject="${a.id}">প্রত্যাখ্যান</button></div>`
-      ).join("") : "কোনো আবেদন নেই।");
-      box.querySelectorAll("[data-approve]").forEach(b =>
-        b.onclick = () => updateAdmission(b.dataset.approve,"approved"));
-      box.querySelectorAll("[data-reject]").forEach(b =>
-        b.onclick = () => updateAdmission(b.dataset.reject,"rejected"));
+    
+if (tab === "admissions") {
+  const { data, error } = await db.from("admissions").select("*")
+    .order("created_at", { ascending: false });
 
-    } else if (tab === "resultsAdmin") {
-      box.innerHTML = `<h3>নতুন রেজাল্ট প্রকাশ</h3>
-      <form id="resultAdd" class="admin-box form">
-      <label>রোল নম্বর<input name="roll_no" required></label>
-      <label>শিক্ষার্থীর নাম<input name="student_name" required></label>
-      <label>জন্মতারিখ<input name="dob" type="date" required></label>
-      <label>শ্রেণি<input name="class_name" required></label>
-      <label>পরীক্ষার নাম<input name="exam_name" required></label>
-      <div class="form-row">
-      <label>প্রাপ্ত নম্বর<input name="marks" type="number" required></label>
-      <label>পূর্ণমান<input name="total_marks" type="number" required></label>
-      </div>
-      <label>গ্রেড<input name="grade"></label>
-      <button class="btn primary">রেজাল্ট প্রকাশ করুন</button></form>
-      <div id="resultAdminMsg"></div>`;
-      $("resultAdd").onsubmit = async e => {
-        e.preventDefault();
-        const f = e.currentTarget, row = {};
-        ["roll_no","student_name","dob","class_name","exam_name","grade"]
-          .forEach(k => row[k] = val(f,k));
-        row.marks = Number(val(f,"marks"));
-        row.total_marks = Number(val(f,"total_marks"));
-        const { error } = await db.from("results").insert(row);
-        $("resultAdminMsg").textContent = error ? error.message : "রেজাল্ট প্রকাশিত হয়েছে।";
-        if (!error) f.reset();
-      };
+  if (error) {
+    box.textContent = "তালিকা লোড করা যায়নি: " + error.message;
+    return;
+  }
 
-    } else if (tab === "resourcesAdmin") {
+  box.innerHTML = "<h3>ভর্তি আবেদন</h3>" + (data.length ? data.map(a =>
+    `<div class="admin-box">
+      <b>${esc(a.student_name)}</b> — ${esc(a.class_name)}
+      <p>অভিভাবক: ${esc(a.guardian_name)} | ফোন: ${esc(a.phone)}</p>
+      <p>জন্মতারিখ: ${esc(a.dob)} | ${esc(a.address)}</p>
+      <p>অবস্থা: ${esc(a.status)}</p>
+      <button class="admin-action" data-approve="${a.id}">অনুমোদন</button>
+      <button class="admin-action" data-reject="${a.id}">প্রত্যাখ্যান</button>
+      <button class="admin-action" data-delete-admission="${a.id}">🗑️ আবেদন ডিলিট</button>
+    </div>`
+  ).join("") : "কোনো আবেদন নেই।");
+
+  box.querySelectorAll("[data-approve]").forEach(b =>
+    b.onclick = () => updateAdmission(b.dataset.approve, "approved"));
+
+  box.querySelectorAll("[data-reject]").forEach(b =>
+    b.onclick = () => updateAdmission(b.dataset.reject, "rejected"));
+
+  box.querySelectorAll("[data-delete-admission]").forEach(b =>
+    b.onclick = () => deleteAdmission(b.dataset.deleteAdmission));
+
+} else if (tab === "resultsAdmin") {
+
       box.innerHTML = `<h3>PDF আপলোড</h3>
       <form id="pdfForm" class="admin-box form">
       <label>PDF-এর নাম<input name="title" required></label>
