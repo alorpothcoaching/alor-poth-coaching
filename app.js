@@ -39,24 +39,36 @@
     return;
   }
 
-  $("admissionForm").addEventListener("submit", async e => {
-    e.preventDefault();
-    const f = e.currentTarget;
-    $("admissionMsg").textContent = "আবেদন জমা হচ্ছে…";
-    const row = {
-      student_name: val(f,"student_name"),
-      guardian_name: val(f,"guardian_name"),
-      dob: val(f,"dob"),
-      class_name: val(f,"class_name"),
-      phone: val(f,"phone"),
-      address: val(f,"address")
-    };
-    const { error } = await db.from("admissions").insert(row);
-    $("admissionMsg").textContent = error
-      ? "আবেদন জমা হয়নি: " + error.message
-      : "আপনার আবেদন গ্রহণ করা হয়েছে।";
-    if (!error) f.reset();
+  
+$("admissionForm").addEventListener("submit", async e => {
+  e.preventDefault();
+
+  const f = e.currentTarget;
+  const msg = $("admissionMsg");
+
+  msg.textContent = "আবেদন জমা হচ্ছে…";
+
+  const { data, error } = await db.rpc("submit_admission", {
+    p_student_name: val(f, "student_name"),
+    p_guardian_name: val(f, "guardian_name"),
+    p_dob: val(f, "dob"),
+    p_class_name: val(f, "class_name"),
+    p_phone: val(f, "phone"),
+    p_address: val(f, "address")
   });
+
+  if (error) {
+    msg.textContent = "আবেদন জমা হয়নি: " + error.message;
+  } else {
+    msg.innerHTML =
+      "আপনার আবেদন সফলভাবে জমা হয়েছে।<br>" +
+      "আপনার Application ID: <strong>" + esc(data) + "</strong><br>" +
+      "এই ID ভবিষ্যতের জন্য সংরক্ষণ করুন।";
+
+    f.reset();
+  }
+});
+
 
   $("resultForm").addEventListener("submit", async e => {
     e.preventDefault();
