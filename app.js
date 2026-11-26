@@ -284,6 +284,25 @@ if (tab === "admissions") {
     adminTab("noticesAdmin");
   }
 
+async function deleteAdmission(id) {
+  if (!confirm("আপনি কি নিশ্চিত এই ভর্তি আবেদনটি ডিলিট করতে চান?")) {
+    return;
+  }
+
+  const { error } = await db
+    .from("admissions")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    toast("আবেদন ডিলিট হয়নি: " + error.message);
+    return;
+  }
+
+  toast("ভর্তি আবেদন সফলভাবে ডিলিট হয়েছে।");
+  await adminTab("admissions");
+}
+  
   async function updateAdmission(id,status) {
     const { error } = await db.from("admissions").update({status}).eq("id",id);
     if (error) toast("পরিবর্তন করা যায়নি।");
