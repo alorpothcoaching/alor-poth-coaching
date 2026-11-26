@@ -80,6 +80,38 @@
         </form>
       </div>
     </section>
+    
+<section class="section wrap" id="admission-status">
+  <div class="two-col result-layout">
+    <div class="section-head left">
+      <span class="eyebrow dark">ADMISSION TRACKING</span>
+      <h2>ভর্তির <em>আবেদনের অবস্থা</em> জানুন</h2>
+      <p>আপনার Application ID ও মোবাইল নম্বর দিয়ে আবেদনের বর্তমান অবস্থা যাচাই করুন।</p>
+    </div>
+
+    <form id="admissionStatusForm" class="panel form">
+      <h3>আবেদন যাচাই</h3>
+
+      <label>Application ID
+        <input name="application_id"
+          placeholder="APC-2026-000005" required>
+      </label>
+
+      <label>মোবাইল নম্বর
+        <input name="phone" type="tel"
+          placeholder="আবেদনের সময় দেওয়া নম্বর" required>
+      </label>
+
+      <button class="btn primary full" type="submit">
+        আবেদনের অবস্থা দেখুন
+      </button>
+
+      <div id="admissionStatusOutput"
+        class="result-output" aria-live="polite"></div>
+    </form>
+  </div>
+</section>
+
 
     <section class="section soft" id="resources"><div class="wrap"><div class="section-head"><span class="eyebrow dark">STUDY MATERIALS</span><h2>পড়াশোনার <em>PDF নোটস</em></h2><p>কর্তৃপক্ষের প্রকাশিত নোটস ও শিক্ষাসামগ্রী এখানে দেখা যাবে।</p></div><div id="resourceList" class="resource-grid"><p class="muted">নোটস লোড হচ্ছে…</p></div></div></section>
     <section class="section wrap" id="notices"><div class="section-head"><span class="eyebrow dark">LATEST UPDATES</span><h2>গুরুত্বপূর্ণ <em>নোটিশ</em></h2></div><div id="noticeList" class="notice-list"><p class="muted">নোটিশ লোড হচ্ছে…</p></div></section>
