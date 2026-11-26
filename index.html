@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#10245b">
+  <title>Alor Poth Coaching Centre</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="hero" id="home">
+    <nav class="nav wrap">
+      <a class="brand" href="#home"><span class="brand-mark">আ</span><span>ALOR POTH<small>COACHING CENTRE</small></span></a>
+      <button class="menu" id="menuBtn" aria-label="মেনু">☰</button>
+      <div class="navlinks" id="navLinks">
+        <a href="#home">হোম</a><a href="#about">আমাদের সম্পর্কে</a><a href="#admission">ভর্তি</a>
+        <a href="#result">রেজাল্ট</a><a href="#resources">PDF নোটস</a><a href="#notices">নোটিশ</a>
+        <a href="#contact">যোগাযোগ</a>
+      </div>
+    </nav>
+    <div class="hero-content wrap">
+      <div class="hero-copy">
+        <span class="eyebrow">LEARN • GROW • SUCCEED</span>
+        <h1>শিক্ষার আলোয়<br><em>গড়ি আগামীর পথ</em></h1>
+        <p>Nursery থেকে Class X পর্যন্ত যত্নসহকারে পাঠদান। প্রতিটি শিক্ষার্থীর শেখা, অনুশীলন ও সাফল্যই আমাদের লক্ষ্য।</p>
+        <div class="hero-actions"><a class="btn gold" href="#admission">অনলাইন ভর্তি আবেদন</a><a class="btn outline" href="#result">রেজাল্ট দেখুন</a></div>
+        <div class="hero-contact">☎ <a href="tel:6290245198">6290245198</a> <span>•</span> কুশমণ্ডি, দক্ষিণ দিনাজপুর</div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="orbit orbit1"></div><div class="orbit orbit2"></div>
+        <div class="book">📚</div><div class="cap">🎓</div><div class="star s1">✦</div><div class="star s2">✧</div>
+        <div class="art-label">স্বপ্ন থেকে সাফল্য</div>
+      </div>
+    </div>
+    <div class="hero-bottom"></div>
+  </header>
+
+  <main>
+    <section class="stats wrap">
+      <div><b>Nursery – X</b><span>শ্রেণিভিত্তিক পাঠদান</span></div>
+      <div><b>Personal Care</b><span>যত্নসহকারে শিক্ষা</span></div>
+      <div><b>Online</b><span>ভর্তি ও রেজাল্ট পরিষেবা</span></div>
+    </section>
+
+    <section class="section wrap" id="about">
+      <div class="section-head"><span class="eyebrow dark">WELCOME TO ALOR POTH</span><h2>শেখার সঠিক পরিবেশ, <em>সাফল্যের নতুন দিশা</em></h2>
+      <p>শিক্ষার্থীদের ভিত্তি মজবুত করা, নিয়মিত অনুশীলন এবং পরীক্ষার প্রস্তুতিতে সহায়তা করাই আমাদের অঙ্গীকার।</p></div>
+      <div class="feature-grid">
+        <article class="feature"><div class="feature-icon">📘</div><h3>নিয়মিত পড়াশোনা</h3><p>শ্রেণি অনুযায়ী বিষয়ভিত্তিক পাঠদান ও অনুশীলন।</p></article>
+        <article class="feature"><div class="feature-icon">🧠</div><h3>ধারণা পরিষ্কার</h3><p>সহজ ভাষায় বিষয় বোঝা ও প্রশ্ন সমাধানের অভ্যাস।</p></article>
+        <article class="feature"><div class="feature-icon">🏅</div><h3>পরীক্ষার প্রস্তুতি</h3><p>মূল্যায়ন, ফলাফল ও উন্নতির দিকে নজর।</p></article>
+      </div>
+    </section>
+
+    <section class="section soft" id="admission">
+      <div class="wrap two-col">
+        <div class="section-head left"><span class="eyebrow dark">ADMISSION OPEN</span><h2>নতুন শিক্ষাবর্ষে <em>ভর্তি চলছে</em></h2><p>নিচের ফর্মটি পূরণ করে আবেদন জমা দিন। কোচিং সেন্টার থেকে যোগাযোগ করে পরবর্তী প্রক্রিয়া জানানো হবে।</p><div class="notice-inline">আবেদন জমা হলেই ভর্তি নিশ্চিত হয় না। কর্তৃপক্ষের অনুমোদনের পর ভর্তি চূড়ান্ত হবে।</div></div>
+        <form id="admissionForm" class="panel form">
+          <h3>অনলাইন ভর্তি আবেদন</h3>
+          <label>শিক্ষার্থীর নাম<input name="student_name" required maxlength="100"></label>
+          <label>অভিভাবকের নাম<input name="guardian_name" required maxlength="100"></label>
+          <div class="form-row"><label>জন্মতারিখ<input name="dob" type="date" required></label>
+          <label>শ্রেণি<select name="class_name" required><option value="">নির্বাচন করুন</option><option>Nursery</option><option>LKG</option><option>UKG</option><option>Class I</option><option>Class II</option><option>Class III</option><option>Class IV</option><option>Class V</option><option>Class VI</option><option>Class VII</option><option>Class VIII</option><option>Class IX</option><option>Class X</option></select></label></div>
+          <label>অভিভাবকের মোবাইল নম্বর<input name="phone" inputmode="tel" pattern="[0-9+\-\s]{10,15}" required></label>
+          <label>ঠিকানা<textarea name="address" rows="3" required maxlength="400"></textarea></label>
+          <button class="btn primary full" type="submit">আবেদন জমা দিন</button><p class="form-message" id="admissionMsg" role="status"></p>
+        </form>
+      </div>
+    </section>
+
+    <section class="section wrap" id="result">
+      <div class="two-col result-layout">
+        <div class="section-head left"><span class="eyebrow dark">STUDENT RESULT</span><h2>আপনার পরীক্ষার <em>ফলাফল দেখুন</em></h2><p>রোল নম্বর, শিক্ষার্থীর নাম, জন্মতারিখ ও শ্রেণি দিয়ে প্রকাশিত ফলাফল খুঁজুন।</p><p class="muted small">আপনার তথ্য ঠিক যেভাবে কোচিং সেন্টারে নথিভুক্ত আছে, সেভাবেই লিখুন।</p></div>
+        <form id="resultForm" class="panel form">
+          <h3>রেজাল্ট যাচাই</h3>
+          <label>রোল নম্বর<input name="roll_no" required></label>
+          <label>শিক্ষার্থীর নাম<input name="student_name" required></label>
+          <div class="form-row"><label>জন্মতারিখ<input name="dob" type="date" required></label><label>শ্রেণি<select name="class_name" required><option value="">নির্বাচন</option><option>Nursery</option><option>LKG</option><option>UKG</option><option>Class I</option><option>Class II</option><option>Class III</option><option>Class IV</option><option>Class V</option><option>Class VI</option><option>Class VII</option><option>Class VIII</option><option>Class IX</option><option>Class X</option></select></label></div>
+          <button class="btn primary full" type="submit">ফলাফল খুঁজুন</button><div id="resultOutput" class="result-output" aria-live="polite"></div>
+        </form>
+      </div>
+    </section>
+
+    <section class="section soft" id="resources"><div class="wrap"><div class="section-head"><span class="eyebrow dark">STUDY MATERIALS</span><h2>পড়াশোনার <em>PDF নোটস</em></h2><p>কর্তৃপক্ষের প্রকাশিত নোটস ও শিক্ষাসামগ্রী এখানে দেখা যাবে।</p></div><div id="resourceList" class="resource-grid"><p class="muted">নোটস লোড হচ্ছে…</p></div></div></section>
+    <section class="section wrap" id="notices"><div class="section-head"><span class="eyebrow dark">LATEST UPDATES</span><h2>গুরুত্বপূর্ণ <em>নোটিশ</em></h2></div><div id="noticeList" class="notice-list"><p class="muted">নোটিশ লোড হচ্ছে…</p></div></section>
+
+    <section class="admin-section"><div class="wrap admin-callout"><div><span class="eyebrow">ADMINISTRATION</span><h2>কর্তৃপক্ষের জন্য</h2><p>ভর্তি আবেদন, রেজাল্ট, PDF ও নোটিশ পরিচালনা করুন।</p></div><button class="btn gold" id="adminOpen">Admin Login</button></div></section>
+  </main>
+
+  <footer id="contact"><div class="wrap footer-grid"><div><a class="brand footer-brand" href="#home"><span class="brand-mark">আ</span><span>ALOR POTH<small>COACHING CENTRE</small></span></a><p>শিক্ষার আলো ছড়িয়ে পড়ুক প্রতিটি ঘরে।</p></div><div><h3>যোগাযোগ</h3><p>পশ্চিম মোল্লাপাড়া, মানিকোরে,<br>কুশমণ্ডি, দক্ষিণ দিনাজপুর – 733132</p><p>ফোন: <a href="tel:6290245198">6290245198</a></p><p><a href="https://wa.me/916290245198" target="_blank" rel="noopener">WhatsApp-এ যোগাযোগ করুন ↗</a></p></div><div><h3>দ্রুত লিংক</h3><p><a href="#admission">ভর্তি আবেদন</a></p><p><a href="#result">রেজাল্ট</a></p><p><a href="#resources">PDF নোটস</a></p></div></div><div class="copyright">© <span id="year"></span> Alor Poth Coaching Centre. সর্বস্বত্ব সংরক্ষিত।</div></footer>
+
+  <dialog id="adminDialog" class="modal"><form method="dialog"><button class="modal-close" aria-label="বন্ধ করুন">×</button></form><div id="loginPanel"><span class="eyebrow dark">ADMIN ACCESS</span><h2>Admin Login</h2><form id="loginForm" class="form"><label>ইমেল<input name="email" type="email" required></label><label>পাসওয়ার্ড<input name="password" type="password" required></label><button class="btn primary full">লগইন</button><p id="loginMsg" class="form-message"></p></form></div><div id="adminPanel" hidden><h2>Admin Dashboard</h2><p id="adminEmail" class="muted"></p><button class="btn secondary" id="logoutBtn">Logout</button><div class="admin-tabs"><button data-tab="admissions">ভর্তি আবেদন</button><button data-tab="resultsAdmin">রেজাল্ট</button><button data-tab="resourcesAdmin">PDF</button><button data-tab="noticesAdmin">নোটিশ</button></div><div id="adminContent"></div></div></dialog>
+
+  <div class="toast" id="toast" role="status"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
