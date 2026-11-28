@@ -556,6 +556,35 @@ async function deleteAdmission(id) {
       showAdmin(data.session.user);
     }
   });
+  async function loadGalleryPublic() {
+    const target = $("galleryList");
+    if (!target || !db) return;
 
+    const { data, error } = await db
+      .from("gallery")
+      .select("title,image_url")
+      .eq("is_published", true)
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      target.textContent = "গ্যালারি লোড করা যায়নি।";
+      return;
+    }
+
+    if (!data || !data.length) {
+      target.textContent = "এখনও কোনো ছবি প্রকাশ করা হয়নি।";
+      return;
+    }
+
+    target.innerHTML = data.map(item => `
+      <figure>
+        <img src="${esc(item.image_url)}"
+          alt="${esc(item.title)}"
+          style="width:100%;height:220px;object-fit:cover;border-radius:12px">
+        <figcaption>${esc(item.title)}</figcaption>
+      </figure>
+    `).join("");
+  }
+    loadGalleryPublic();
   loadPublic();
 })();
