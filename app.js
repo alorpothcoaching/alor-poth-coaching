@@ -318,6 +318,132 @@ if (tab === "admissions") {
     if (!error) f.reset();
   };
 
+} else if (tab === "galleryAdmin") {
+
+  box.innerHTML = `
+    <h3>ফটো গ্যালারিতে ছবি আপলোড</h3>
+    <form id="galleryForm" class="admin-box form">
+      <label>ছবির নাম
+        <input name="title" required maxlength="100">
+      </label>
+      <label>ছবি নির্বাচন করুন
+        <input name="file" type="file" accept="image/*" required>
+      </label>
+      <button class="btn primary">ছবি আপলোড ও প্রকাশ</button>
+    </form>
+    <div id="galleryMsg"></div>
+    <hr>
+    <h3>আপলোড করা ছবি</h3>
+    <div id="galleryAdminList">লোড হচ্ছে…</div>
+  `;
+
+  $("galleryForm").onsubmit = async e => {
+    e.preventDefault();
+
+    const f = e.currentTarget;
+    const file = f.elements.file.files[0];
+    const msg = $("galleryMsg");
+
+    if (!file || !file.type.startsWith("image/")) {
+      msg.textContent = "শুধু ছবির ফাইল নির্বাচন করুন।";
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      msg.textContent = "ছবির সাইজ ৫ MB-এর কম হতে হবে।";
+      return;
+    }
+
+    msg.textContent = "ছবি আপলোড হচ্ছে…";
+
+    const path = Date.now() + "-" +
+      file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+
+    const up = await db.storage
+      .from("gallery-photos")
+      .upload(path, file);
+
+    if (up.error) {
+      msg.textContent = up.error.message;
+      return;
+    }
+
+    const url = db.storage
+      .from("gallery-photos")
+      .getPublicUrl(path).data.publicUrl;
+
+    const ins = await db.from("gallery").insert({
+      title: val(f, "title"),
+      image_url: url,
+      storage_path: path,
+      is_published: true
+    });
+
+    if (ins.error) {
+      await db.storage.from("gallery-photos").remove([path]);
+      msg.textContent = ins.error.message;
+      return;
+    }
+
+    msg.textContent = "ছবি সফলভাবে প্রকাশিত হয়েছে।";
+    f.reset();
+    adminTab("galleryAdmin");
+    loadGalleryPublic();
+  };
+
+  const { data, error } = await db
+    .from("gallery")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    $("galleryAdminList").textContent = error.message;
+  } else if (!data.length) {
+    $("galleryAdminList").textContent = "এখনও কোনো ছবি আপলোড করা হয়নি।";
+  } else {
+    $("galleryAdminList").innerHTML = data.map(item => `
+      <div class="admin-box">
+        <img src="${esc(item.image_url)}"
+          alt="${esc(item.title)}"
+          style="width:120px;border-radius:8px">
+        <p>${esc(item.title)}</p>
+        <button class="btn secondary"
+          data-gallery-delete="${esc(item.id)}">
+          ছবি মুছুন
+        </button>
+      </div>
+    `).join("");
+
+    $("galleryAdminList").querySelectorAll("[data-gallery-delete]")
+      .forEach(button => {
+        button.onclick = async () => {
+          if (!confirm("ছবিটি মুছে ফেলবেন?")) return;
+
+          const item = data.find(x => x.id === button.dataset.galleryDelete);
+          if (!item) return;
+
+          const removed = await db.storage
+            .from("gallery-photos").remove([item.storage_path]);
+
+          if (removed.error) {
+            alert(removed.error.message);
+            return;
+          }
+
+          const deleted = await db.from("gallery")
+            .delete().eq("id", item.id);
+
+          if (deleted.error) {
+            alert(deleted.error.message);
+            return;
+          }
+
+          adminTab("galleryAdmin");
+          loadGalleryPublic();
+        };
+      });
+  }
+
 } else if (tab === "noticesAdmin") {
       box.innerHTML = `<h3>নতুন নোটিশ প্রকাশ</h3>
       <form id="noticeForm" class="admin-box form">
