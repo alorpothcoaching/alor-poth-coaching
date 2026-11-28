@@ -557,34 +557,60 @@ async function deleteAdmission(id) {
     }
   });
   async function loadGalleryPublic() {
-    const target = $("galleryList");
-    if (!target || !db) return;
+  const target = $("galleryList");
+  if (!target || !db) return;
 
-    const { data, error } = await db
-      .from("gallery")
-      .select("title,image_url")
-      .eq("is_published", true)
-      .order("created_at", { ascending: false });
+  const { data, error } = await db
+    .from("gallery")
+    .select("title,image_url")
+    .eq("is_published", true)
+    .order("created_at", { ascending: false });
 
-    if (error) {
-      target.textContent = "গ্যালারি লোড করা যায়নি।";
-      return;
-    }
-
-    if (!data || !data.length) {
-      target.textContent = "এখনও কোনো ছবি প্রকাশ করা হয়নি।";
-      return;
-    }
-
-    target.innerHTML = data.map(item => `
-      <figure>
-        <img src="${esc(item.image_url)}"
-          alt="${esc(item.title)}"
-          style="width:100%;height:220px;object-fit:cover;border-radius:12px">
-        <figcaption>${esc(item.title)}</figcaption>
-      </figure>
-    `).join("");
+  if (error) {
+    target.textContent = "গ্যালারি লোড করা যায়নি।";
+    return;
   }
+
+  if (!data || !data.length) {
+    target.textContent = "এখনও কোনো ছবি প্রকাশ করা হয়নি।";
+    return;
+  }
+
+  target.innerHTML = data.map(item => `
+    <figure>
+      <img src="${esc(item.image_url)}"
+        alt="${esc(item.title)}"
+        class="gallery-click-image"
+        style="width:100%;height:220px;object-fit:contain;
+        border-radius:12px;cursor:zoom-in">
+      <figcaption>${esc(item.title)}</figcaption>
+    </figure>
+  `).join("");
+
+  target.querySelectorAll(".gallery-click-image").forEach(img => {
+    img.onclick = () => {
+      const overlay = document.createElement("div");
+
+      overlay.style.cssText = `
+        position:fixed;inset:0;background:rgba(0,0,0,.95);
+        z-index:99999;display:flex;align-items:center;
+        justify-content:center;padding:15px;
+      `;
+
+      overlay.innerHTML = `
+        <button style="position:absolute;top:15px;right:20px;
+          font-size:32px;color:white;background:none;
+          border:0;cursor:pointer">×</button>
+        <img src="${esc(img.src)}"
+          style="max-width:100%;max-height:90vh;
+          object-fit:contain">
+      `;
+
+      overlay.onclick = () => overlay.remove();
+      document.body.appendChild(overlay);
+    };
+  });
+}
     loadGalleryPublic();
   loadPublic();
 })();
